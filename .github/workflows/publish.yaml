@@ -1,0 +1,71 @@
+---
+name: Publish package
+on:
+  workflow_dispatch:
+    inputs:
+      versionBumpType:
+        description: Version bump type
+        required: true
+        default: patch
+        type: choice
+        options: [major, minor, patch]
+permissions:
+  contents: write
+  id-token: write
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    outputs:
+      latest-version: ${{ steps.publish.outputs.latest-version }}
+    defaults:
+      run:
+        working-directory: ./sdk
+    steps:
+      - name: Check permission
+        if: ${{ !contains('["17008875","33892812", "86938582"]', github.actor_id) }}
+        run: echo 'Permission denied' && exit 1
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.ADMIN_TOKEN }}
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: https://registry.npmjs.org
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+      - name: Install jq
+        run: sudo apt-get update && sudo apt-get install -y jq
+      - name: Install Dependencies
+        run: bun install --frozen-lockfile
+      - name: Compile & Release
+        run: bun run release
+      - name: Bump versions
+        run: |
+          # Get current version
+          CURRENT_VERSION=$(jq -r .version package.json)
+          # Calculate new version using semver.sh
+          NEW_VERSION=$(echo "$CURRENT_VERSION" | awk -F. -v type=${{ inputs.versionBumpType }} '
+            type=="major" {print $1+1".0.0"}
+            type=="minor" {print $1"."$2+1".0"}
+            type=="patch" {print $1"."$2"."$3+1}
+          ')
+          # Update both package.json files
+          jq ".version = \"$NEW_VERSION\"" package.json > temp.json && mv temp.json package.json
+          cd dist && jq ".version = \"$NEW_VERSION\"" package.json > temp.json && mv temp.json package.json
+          echo "Version bumped from $CURRENT_VERSION to $NEW_VERSION"
+      - name: Publish package
+        run: |
+          VERSION=$(jq -r .version package.json)
+          echo "Publishing version: $VERSION"
+          cd dist && npm publish --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - id: publish
+        name: Output variables
+        run: echo "latest-version=$(cat package.json | jq -r .version)" >> "$GITHUB_OUTPUT"
+      - name: Commit change
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: 'chore: bump sdk version'
