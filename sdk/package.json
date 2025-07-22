@@ -1,0 +1,38 @@
+{
+  "name": "detoken-sdk",
+  "version": "0.0.1",
+  "private": false,
+  "description": "A TypeScript SDK for interacting with the Bucket protocol detoken contract",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LiquidLogic-Tech/detoken-sdk"
+  },
+  "main": "./dist/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./_generated/*": {
+      "import": "./dist/_generated/de-token-v2/*",
+      "require": "./dist/_generated/de-token-v2/*",
+      "types": "./dist/_generated/de-token-v2/*.d.ts"
+    }
+  },
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "rm -rf ./dist && bun tsc",
+    "eslint": "eslint --fix \"./src/**/*.ts\"",
+    "prettier": "prettier --write \"./src/**/*\"",
+    "lint": "bun eslint && bun prettier && bun tsc --noEmit",
+    "release": "bun run build && bun ts-node ./release.ts"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.2"
+  },
+  "peerDependencies": {
+    "@mysten/sui": "^1.36.1"
+  }
+}

@@ -1,0 +1,5 @@
+[config]
+rpc = "https://fullnode.mainnet.sui.io:443"
+
+[packages]
+DeTokenV2 = { local = "../../../../../move/de_token_v2/" }
