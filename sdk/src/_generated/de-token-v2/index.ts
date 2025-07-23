@@ -1,3 +1,10 @@
-export const PACKAGE_ID = "0x0";
-export const PUBLISHED_AT = "0x0";
-export const PKG_V1 = "0x0";
+export const PACKAGE_ID =
+  "0x8d378268233c9cdc636b7820fd45de7ba4d9ad92835c2391d3b24d4d2332e790";
+export let PUBLISHED_AT =
+  "0x8d378268233c9cdc636b7820fd45de7ba4d9ad92835c2391d3b24d4d2332e790";
+export const PKG_V1 =
+  "0x8d378268233c9cdc636b7820fd45de7ba4d9ad92835c2391d3b24d4d2332e790";
+
+export function setPublishedAt(packageId: string) {
+  PUBLISHED_AT = packageId;
+}

@@ -1,3 +1,2 @@
-export function foo() {
-  console.log("hello detoken SDK");
-}
+export * from "./client";
+export * from "./lib"
