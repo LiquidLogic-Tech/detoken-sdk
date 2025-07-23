@@ -109,5 +109,8 @@ client.updateDurationMoveCall(tx, minDuration, maxDuration);
 
 // Update minimum return percentage rate
 client.updateMinReturnPercentageRateMoveCall(tx, minReturnPercentageRate);
+
+// withdraw penalty fee
+client.withdrawPenaltyFeeMoveCall(tx, value);
 ```
 

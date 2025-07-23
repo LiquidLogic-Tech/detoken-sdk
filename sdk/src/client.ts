@@ -16,6 +16,7 @@ import {
   requestUnlock,
   updateDuration,
   updateMinReturnPercentageRate,
+  withdrawPenaltyFee,
 } from "./_generated/de-token-v2/de-center/functions";
 import { DeToken } from "./_generated/de-token-v2/de-token/structs";
 import { composeSuiType } from "./_generated/_framework/util";
@@ -254,6 +255,14 @@ export class DeTokenClient {
       self: tx.object(this.deCenter.id),
       adminCap: tx.object(ADMIN_CAP_OBJECT_ID),
       minReturnPercentageRate,
+    });
+  }
+
+  withdrawPenaltyFeeMoveCall(tx: Transaction, value: bigint) {
+    withdrawPenaltyFee(tx, this.deCenter.$typeArgs[0], {
+      self: tx.object(this.deCenter.id),
+      cap: tx.object(ADMIN_CAP_OBJECT_ID),
+      value,
     });
   }
 }

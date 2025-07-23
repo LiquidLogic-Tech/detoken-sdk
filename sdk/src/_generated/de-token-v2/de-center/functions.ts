@@ -38,6 +38,10 @@ export interface UpdateMinReturnPercentageRateArgs { self: TransactionObjectInpu
 
 export function updateMinReturnPercentageRate( tx: Transaction, typeArg: string, args: UpdateMinReturnPercentageRateArgs ) { return tx.moveCall({ target: `${PUBLISHED_AT}::de_center::update_min_return_percentage_rate`, typeArguments: [typeArg], arguments: [ obj(tx, args.self), obj(tx, args.adminCap), pure(tx, args.minReturnPercentageRate, `u8`) ], }) }
 
+export interface WithdrawPenaltyFeeArgs { self: TransactionObjectInput; cap: TransactionObjectInput; value: bigint | TransactionArgument }
+
+export function withdrawPenaltyFee( tx: Transaction, typeArg: string, args: WithdrawPenaltyFeeArgs ) { return tx.moveCall({ target: `${PUBLISHED_AT}::de_center::withdraw_penalty_fee`, typeArguments: [typeArg], arguments: [ obj(tx, args.self), obj(tx, args.cap), pure(tx, args.value, `u64`) ], }) }
+
 export interface DefaultArgs { cap: TransactionObjectInput; minUnlockingPeriod: bigint | TransactionArgument; maxUnlockingPeriod: bigint | TransactionArgument; minReturnPercentageRate: number | TransactionArgument }
 
 export function default_( tx: Transaction, typeArg: string, args: DefaultArgs ) { return tx.moveCall({ target: `${PUBLISHED_AT}::de_center::default`, typeArguments: [typeArg], arguments: [ obj(tx, args.cap), pure(tx, args.minUnlockingPeriod, `u64`), pure(tx, args.maxUnlockingPeriod, `u64`), pure(tx, args.minReturnPercentageRate, `u8`) ], }) }
