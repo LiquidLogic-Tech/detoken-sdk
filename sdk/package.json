@@ -1,6 +1,6 @@
 {
   "name": "detoken-sdk",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "private": false,
   "description": "A TypeScript SDK for interacting with the Bucket protocol detoken contract",
   "license": "MIT",
