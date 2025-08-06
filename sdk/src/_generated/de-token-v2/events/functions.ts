@@ -7,6 +7,18 @@ export interface EmitNewCenterEventArgs { id: string | TransactionArgument; minU
 
 export function emitNewCenterEvent( tx: Transaction, typeArg: string, args: EmitNewCenterEventArgs ) { return tx.moveCall({ target: `${PUBLISHED_AT}::events::emit_new_center_event`, typeArguments: [typeArg], arguments: [ pure(tx, args.id, `${ID.$typeName}`), pure(tx, args.minUnlockingDuration, `u64`), pure(tx, args.maxUnlockingDuration, `u64`), pure(tx, args.basePercentage, `u8`) ], }) }
 
+export interface EmitUpdateDurationArgs { deCenterId: string | TransactionArgument; minDuration: bigint | TransactionArgument; maxDuration: bigint | TransactionArgument }
+
+export function emitUpdateDuration( tx: Transaction, typeArg: string, args: EmitUpdateDurationArgs ) { return tx.moveCall({ target: `${PUBLISHED_AT}::events::emit_update_duration`, typeArguments: [typeArg], arguments: [ pure(tx, args.deCenterId, `${ID.$typeName}`), pure(tx, args.minDuration, `u64`), pure(tx, args.maxDuration, `u64`) ], }) }
+
+export interface EmitUpdateMinReturnPercentageRateArgs { deCenterId: string | TransactionArgument; minReturnPercentageRate: number | TransactionArgument }
+
+export function emitUpdateMinReturnPercentageRate( tx: Transaction, typeArg: string, args: EmitUpdateMinReturnPercentageRateArgs ) { return tx.moveCall({ target: `${PUBLISHED_AT}::events::emit_update_min_return_percentage_rate`, typeArguments: [typeArg], arguments: [ pure(tx, args.deCenterId, `${ID.$typeName}`), pure(tx, args.minReturnPercentageRate, `u8`) ], }) }
+
+export interface EmitWithdrawPenaltyFeeArgs { deCenterId: string | TransactionArgument; value: bigint | TransactionArgument }
+
+export function emitWithdrawPenaltyFee( tx: Transaction, typeArg: string, args: EmitWithdrawPenaltyFeeArgs ) { return tx.moveCall({ target: `${PUBLISHED_AT}::events::emit_withdraw_penalty_fee`, typeArguments: [typeArg], arguments: [ pure(tx, args.deCenterId, `${ID.$typeName}`), pure(tx, args.value, `u64`) ], }) }
+
 export interface EmitLockEventArgs { deTokenId: string | TransactionArgument; lockedBalance: bigint | TransactionArgument }
 
 export function emitLockEvent( tx: Transaction, typeArg: string, args: EmitLockEventArgs ) { return tx.moveCall({ target: `${PUBLISHED_AT}::events::emit_lock_event`, typeArguments: [typeArg], arguments: [ pure(tx, args.deTokenId, `${ID.$typeName}`), pure(tx, args.lockedBalance, `u64`) ], }) }

@@ -80,6 +80,228 @@ export class NewCenterEvent<T extends PhantomTypeArgument> implements StructClas
 
  }
 
+/* ============================== UpdateDuration =============================== */
+
+export function isUpdateDuration(type: string): boolean { type = compressSuiType(type); return type.startsWith(`${PKG_V1}::events::UpdateDuration` + '<'); }
+
+export interface UpdateDurationFields<T extends PhantomTypeArgument> { deCenterId: ToField<ID>; minDuration: ToField<"u64">; maxDuration: ToField<"u64"> }
+
+export type UpdateDurationReified<T extends PhantomTypeArgument> = Reified< UpdateDuration<T>, UpdateDurationFields<T> >;
+
+export class UpdateDuration<T extends PhantomTypeArgument> implements StructClass { __StructClass = true as const;
+
+ static readonly $typeName = `${PKG_V1}::events::UpdateDuration`; static readonly $numTypeParams = 1; static readonly $isPhantom = [true,] as const;
+
+ readonly $typeName = UpdateDuration.$typeName; readonly $fullTypeName: `${typeof PKG_V1}::events::UpdateDuration<${PhantomToTypeStr<T>}>`; readonly $typeArgs: [PhantomToTypeStr<T>]; readonly $isPhantom = UpdateDuration.$isPhantom;
+
+ readonly deCenterId: ToField<ID>; readonly minDuration: ToField<"u64">; readonly maxDuration: ToField<"u64">
+
+ private constructor(typeArgs: [PhantomToTypeStr<T>], fields: UpdateDurationFields<T>, ) { this.$fullTypeName = composeSuiType( UpdateDuration.$typeName, ...typeArgs ) as `${typeof PKG_V1}::events::UpdateDuration<${PhantomToTypeStr<T>}>`; this.$typeArgs = typeArgs;
+
+ this.deCenterId = fields.deCenterId;; this.minDuration = fields.minDuration;; this.maxDuration = fields.maxDuration; }
+
+ static reified<T extends PhantomReified<PhantomTypeArgument>>( T: T ): UpdateDurationReified<ToPhantomTypeArgument<T>> { const reifiedBcs = UpdateDuration.bcs; return { typeName: UpdateDuration.$typeName, fullTypeName: composeSuiType( UpdateDuration.$typeName, ...[extractType(T)] ) as `${typeof PKG_V1}::events::UpdateDuration<${PhantomToTypeStr<ToPhantomTypeArgument<T>>}>`, typeArgs: [ extractType(T) ] as [PhantomToTypeStr<ToPhantomTypeArgument<T>>], isPhantom: UpdateDuration.$isPhantom, reifiedTypeArgs: [T], fromFields: (fields: Record<string, any>) => UpdateDuration.fromFields( T, fields, ), fromFieldsWithTypes: (item: FieldsWithTypes) => UpdateDuration.fromFieldsWithTypes( T, item, ), fromBcs: (data: Uint8Array) => UpdateDuration.fromFields( T, reifiedBcs.parse(data) ), bcs: reifiedBcs, fromJSONField: (field: any) => UpdateDuration.fromJSONField( T, field, ), fromJSON: (json: Record<string, any>) => UpdateDuration.fromJSON( T, json, ), fromSuiParsedData: (content: SuiParsedData) => UpdateDuration.fromSuiParsedData( T, content, ), fromSuiObjectData: (content: SuiObjectData) => UpdateDuration.fromSuiObjectData( T, content, ), fetch: async (client: SuiClient, id: string) => UpdateDuration.fetch( client, T, id, ), new: ( fields: UpdateDurationFields<ToPhantomTypeArgument<T>>, ) => { return new UpdateDuration( [extractType(T)], fields ) }, kind: "StructClassReified", } }
+
+ static get r() { return UpdateDuration.reified }
+
+ static phantom<T extends PhantomReified<PhantomTypeArgument>>( T: T ): PhantomReified<ToTypeStr<UpdateDuration<ToPhantomTypeArgument<T>>>> { return phantom(UpdateDuration.reified( T )); } static get p() { return UpdateDuration.phantom }
+
+ private static instantiateBcs() { return bcs.struct("UpdateDuration", {
+
+ de_center_id: ID.bcs, min_duration: bcs.u64(), max_duration: bcs.u64()
+
+}) };
+
+ private static cachedBcs: ReturnType<typeof UpdateDuration.instantiateBcs> | null = null;
+
+ static get bcs() { if (!UpdateDuration.cachedBcs) { UpdateDuration.cachedBcs = UpdateDuration.instantiateBcs() } return UpdateDuration.cachedBcs };
+
+ static fromFields<T extends PhantomReified<PhantomTypeArgument>>( typeArg: T, fields: Record<string, any> ): UpdateDuration<ToPhantomTypeArgument<T>> { return UpdateDuration.reified( typeArg, ).new( { deCenterId: decodeFromFields(ID.reified(), fields.de_center_id), minDuration: decodeFromFields("u64", fields.min_duration), maxDuration: decodeFromFields("u64", fields.max_duration) } ) }
+
+ static fromFieldsWithTypes<T extends PhantomReified<PhantomTypeArgument>>( typeArg: T, item: FieldsWithTypes ): UpdateDuration<ToPhantomTypeArgument<T>> { if (!isUpdateDuration(item.type)) { throw new Error("not a UpdateDuration type");
+
+ } assertFieldsWithTypesArgsMatch(item, [typeArg]);
+
+ return UpdateDuration.reified( typeArg, ).new( { deCenterId: decodeFromFieldsWithTypes(ID.reified(), item.fields.de_center_id), minDuration: decodeFromFieldsWithTypes("u64", item.fields.min_duration), maxDuration: decodeFromFieldsWithTypes("u64", item.fields.max_duration) } ) }
+
+ static fromBcs<T extends PhantomReified<PhantomTypeArgument>>( typeArg: T, data: Uint8Array ): UpdateDuration<ToPhantomTypeArgument<T>> { return UpdateDuration.fromFields( typeArg, UpdateDuration.bcs.parse(data) ) }
+
+ toJSONField() { return {
+
+ deCenterId: this.deCenterId,minDuration: this.minDuration.toString(),maxDuration: this.maxDuration.toString(),
+
+} }
+
+ toJSON() { return { $typeName: this.$typeName, $typeArgs: this.$typeArgs, ...this.toJSONField() } }
+
+ static fromJSONField<T extends PhantomReified<PhantomTypeArgument>>( typeArg: T, field: any ): UpdateDuration<ToPhantomTypeArgument<T>> { return UpdateDuration.reified( typeArg, ).new( { deCenterId: decodeFromJSONField(ID.reified(), field.deCenterId), minDuration: decodeFromJSONField("u64", field.minDuration), maxDuration: decodeFromJSONField("u64", field.maxDuration) } ) }
+
+ static fromJSON<T extends PhantomReified<PhantomTypeArgument>>( typeArg: T, json: Record<string, any> ): UpdateDuration<ToPhantomTypeArgument<T>> { if (json.$typeName !== UpdateDuration.$typeName) { throw new Error("not a WithTwoGenerics json object") }; assertReifiedTypeArgsMatch( composeSuiType(UpdateDuration.$typeName, extractType(typeArg)), json.$typeArgs, [typeArg], )
+
+ return UpdateDuration.fromJSONField( typeArg, json, ) }
+
+ static fromSuiParsedData<T extends PhantomReified<PhantomTypeArgument>>( typeArg: T, content: SuiParsedData ): UpdateDuration<ToPhantomTypeArgument<T>> { if (content.dataType !== "moveObject") { throw new Error("not an object"); } if (!isUpdateDuration(content.type)) { throw new Error(`object at ${(content.fields as any).id} is not a UpdateDuration object`); } return UpdateDuration.fromFieldsWithTypes( typeArg, content ); }
+
+ static fromSuiObjectData<T extends PhantomReified<PhantomTypeArgument>>( typeArg: T, data: SuiObjectData ): UpdateDuration<ToPhantomTypeArgument<T>> { if (data.bcs) { if (data.bcs.dataType !== "moveObject" || !isUpdateDuration(data.bcs.type)) { throw new Error(`object at is not a UpdateDuration object`); }
+
+ const gotTypeArgs = parseTypeName(data.bcs.type).typeArgs; if (gotTypeArgs.length !== 1) { throw new Error(`type argument mismatch: expected 1 type argument but got '${gotTypeArgs.length}'`); }; const gotTypeArg = compressSuiType(gotTypeArgs[0]); const expectedTypeArg = compressSuiType(extractType(typeArg)); if (gotTypeArg !== compressSuiType(extractType(typeArg))) { throw new Error(`type argument mismatch: expected '${expectedTypeArg}' but got '${gotTypeArg}'`); };
+
+ return UpdateDuration.fromBcs( typeArg, fromB64(data.bcs.bcsBytes) ); } if (data.content) { return UpdateDuration.fromSuiParsedData( typeArg, data.content ) } throw new Error( "Both `bcs` and `content` fields are missing from the data. Include `showBcs` or `showContent` in the request." ); }
+
+ static async fetch<T extends PhantomReified<PhantomTypeArgument>>( client: SuiClient, typeArg: T, id: string ): Promise<UpdateDuration<ToPhantomTypeArgument<T>>> { const res = await client.getObject({ id, options: { showBcs: true, }, }); if (res.error) { throw new Error(`error fetching UpdateDuration object at id ${id}: ${res.error.code}`); } if (res.data?.bcs?.dataType !== "moveObject" || !isUpdateDuration(res.data.bcs.type)) { throw new Error(`object at id ${id} is not a UpdateDuration object`); }
+
+ return UpdateDuration.fromSuiObjectData( typeArg, res.data ); }
+
+ }
+
+/* ============================== UpdateMinReturnPercentageRate =============================== */
+
+export function isUpdateMinReturnPercentageRate(type: string): boolean { type = compressSuiType(type); return type.startsWith(`${PKG_V1}::events::UpdateMinReturnPercentageRate` + '<'); }
+
+export interface UpdateMinReturnPercentageRateFields<T extends PhantomTypeArgument> { deCenterId: ToField<ID>; minReturnPercentageRate: ToField<"u8"> }
+
+export type UpdateMinReturnPercentageRateReified<T extends PhantomTypeArgument> = Reified< UpdateMinReturnPercentageRate<T>, UpdateMinReturnPercentageRateFields<T> >;
+
+export class UpdateMinReturnPercentageRate<T extends PhantomTypeArgument> implements StructClass { __StructClass = true as const;
+
+ static readonly $typeName = `${PKG_V1}::events::UpdateMinReturnPercentageRate`; static readonly $numTypeParams = 1; static readonly $isPhantom = [true,] as const;
+
+ readonly $typeName = UpdateMinReturnPercentageRate.$typeName; readonly $fullTypeName: `${typeof PKG_V1}::events::UpdateMinReturnPercentageRate<${PhantomToTypeStr<T>}>`; readonly $typeArgs: [PhantomToTypeStr<T>]; readonly $isPhantom = UpdateMinReturnPercentageRate.$isPhantom;
+
+ readonly deCenterId: ToField<ID>; readonly minReturnPercentageRate: ToField<"u8">
+
+ private constructor(typeArgs: [PhantomToTypeStr<T>], fields: UpdateMinReturnPercentageRateFields<T>, ) { this.$fullTypeName = composeSuiType( UpdateMinReturnPercentageRate.$typeName, ...typeArgs ) as `${typeof PKG_V1}::events::UpdateMinReturnPercentageRate<${PhantomToTypeStr<T>}>`; this.$typeArgs = typeArgs;
+
+ this.deCenterId = fields.deCenterId;; this.minReturnPercentageRate = fields.minReturnPercentageRate; }
+
+ static reified<T extends PhantomReified<PhantomTypeArgument>>( T: T ): UpdateMinReturnPercentageRateReified<ToPhantomTypeArgument<T>> { const reifiedBcs = UpdateMinReturnPercentageRate.bcs; return { typeName: UpdateMinReturnPercentageRate.$typeName, fullTypeName: composeSuiType( UpdateMinReturnPercentageRate.$typeName, ...[extractType(T)] ) as `${typeof PKG_V1}::events::UpdateMinReturnPercentageRate<${PhantomToTypeStr<ToPhantomTypeArgument<T>>}>`, typeArgs: [ extractType(T) ] as [PhantomToTypeStr<ToPhantomTypeArgument<T>>], isPhantom: UpdateMinReturnPercentageRate.$isPhantom, reifiedTypeArgs: [T], fromFields: (fields: Record<string, any>) => UpdateMinReturnPercentageRate.fromFields( T, fields, ), fromFieldsWithTypes: (item: FieldsWithTypes) => UpdateMinReturnPercentageRate.fromFieldsWithTypes( T, item, ), fromBcs: (data: Uint8Array) => UpdateMinReturnPercentageRate.fromFields( T, reifiedBcs.parse(data) ), bcs: reifiedBcs, fromJSONField: (field: any) => UpdateMinReturnPercentageRate.fromJSONField( T, field, ), fromJSON: (json: Record<string, any>) => UpdateMinReturnPercentageRate.fromJSON( T, json, ), fromSuiParsedData: (content: SuiParsedData) => UpdateMinReturnPercentageRate.fromSuiParsedData( T, content, ), fromSuiObjectData: (content: SuiObjectData) => UpdateMinReturnPercentageRate.fromSuiObjectData( T, content, ), fetch: async (client: SuiClient, id: string) => UpdateMinReturnPercentageRate.fetch( client, T, id, ), new: ( fields: UpdateMinReturnPercentageRateFields<ToPhantomTypeArgument<T>>, ) => { return new UpdateMinReturnPercentageRate( [extractType(T)], fields ) }, kind: "StructClassReified", } }
+
+ static get r() { return UpdateMinReturnPercentageRate.reified }
+
+ static phantom<T extends PhantomReified<PhantomTypeArgument>>( T: T ): PhantomReified<ToTypeStr<UpdateMinReturnPercentageRate<ToPhantomTypeArgument<T>>>> { return phantom(UpdateMinReturnPercentageRate.reified( T )); } static get p() { return UpdateMinReturnPercentageRate.phantom }
+
+ private static instantiateBcs() { return bcs.struct("UpdateMinReturnPercentageRate", {
+
+ de_center_id: ID.bcs, min_return_percentage_rate: bcs.u8()
+
+}) };
+
+ private static cachedBcs: ReturnType<typeof UpdateMinReturnPercentageRate.instantiateBcs> | null = null;
+
+ static get bcs() { if (!UpdateMinReturnPercentageRate.cachedBcs) { UpdateMinReturnPercentageRate.cachedBcs = UpdateMinReturnPercentageRate.instantiateBcs() } return UpdateMinReturnPercentageRate.cachedBcs };
+
+ static fromFields<T extends PhantomReified<PhantomTypeArgument>>( typeArg: T, fields: Record<string, any> ): UpdateMinReturnPercentageRate<ToPhantomTypeArgument<T>> { return UpdateMinReturnPercentageRate.reified( typeArg, ).new( { deCenterId: decodeFromFields(ID.reified(), fields.de_center_id), minReturnPercentageRate: decodeFromFields("u8", fields.min_return_percentage_rate) } ) }
+
+ static fromFieldsWithTypes<T extends PhantomReified<PhantomTypeArgument>>( typeArg: T, item: FieldsWithTypes ): UpdateMinReturnPercentageRate<ToPhantomTypeArgument<T>> { if (!isUpdateMinReturnPercentageRate(item.type)) { throw new Error("not a UpdateMinReturnPercentageRate type");
+
+ } assertFieldsWithTypesArgsMatch(item, [typeArg]);
+
+ return UpdateMinReturnPercentageRate.reified( typeArg, ).new( { deCenterId: decodeFromFieldsWithTypes(ID.reified(), item.fields.de_center_id), minReturnPercentageRate: decodeFromFieldsWithTypes("u8", item.fields.min_return_percentage_rate) } ) }
+
+ static fromBcs<T extends PhantomReified<PhantomTypeArgument>>( typeArg: T, data: Uint8Array ): UpdateMinReturnPercentageRate<ToPhantomTypeArgument<T>> { return UpdateMinReturnPercentageRate.fromFields( typeArg, UpdateMinReturnPercentageRate.bcs.parse(data) ) }
+
+ toJSONField() { return {
+
+ deCenterId: this.deCenterId,minReturnPercentageRate: this.minReturnPercentageRate,
+
+} }
+
+ toJSON() { return { $typeName: this.$typeName, $typeArgs: this.$typeArgs, ...this.toJSONField() } }
+
+ static fromJSONField<T extends PhantomReified<PhantomTypeArgument>>( typeArg: T, field: any ): UpdateMinReturnPercentageRate<ToPhantomTypeArgument<T>> { return UpdateMinReturnPercentageRate.reified( typeArg, ).new( { deCenterId: decodeFromJSONField(ID.reified(), field.deCenterId), minReturnPercentageRate: decodeFromJSONField("u8", field.minReturnPercentageRate) } ) }
+
+ static fromJSON<T extends PhantomReified<PhantomTypeArgument>>( typeArg: T, json: Record<string, any> ): UpdateMinReturnPercentageRate<ToPhantomTypeArgument<T>> { if (json.$typeName !== UpdateMinReturnPercentageRate.$typeName) { throw new Error("not a WithTwoGenerics json object") }; assertReifiedTypeArgsMatch( composeSuiType(UpdateMinReturnPercentageRate.$typeName, extractType(typeArg)), json.$typeArgs, [typeArg], )
+
+ return UpdateMinReturnPercentageRate.fromJSONField( typeArg, json, ) }
+
+ static fromSuiParsedData<T extends PhantomReified<PhantomTypeArgument>>( typeArg: T, content: SuiParsedData ): UpdateMinReturnPercentageRate<ToPhantomTypeArgument<T>> { if (content.dataType !== "moveObject") { throw new Error("not an object"); } if (!isUpdateMinReturnPercentageRate(content.type)) { throw new Error(`object at ${(content.fields as any).id} is not a UpdateMinReturnPercentageRate object`); } return UpdateMinReturnPercentageRate.fromFieldsWithTypes( typeArg, content ); }
+
+ static fromSuiObjectData<T extends PhantomReified<PhantomTypeArgument>>( typeArg: T, data: SuiObjectData ): UpdateMinReturnPercentageRate<ToPhantomTypeArgument<T>> { if (data.bcs) { if (data.bcs.dataType !== "moveObject" || !isUpdateMinReturnPercentageRate(data.bcs.type)) { throw new Error(`object at is not a UpdateMinReturnPercentageRate object`); }
+
+ const gotTypeArgs = parseTypeName(data.bcs.type).typeArgs; if (gotTypeArgs.length !== 1) { throw new Error(`type argument mismatch: expected 1 type argument but got '${gotTypeArgs.length}'`); }; const gotTypeArg = compressSuiType(gotTypeArgs[0]); const expectedTypeArg = compressSuiType(extractType(typeArg)); if (gotTypeArg !== compressSuiType(extractType(typeArg))) { throw new Error(`type argument mismatch: expected '${expectedTypeArg}' but got '${gotTypeArg}'`); };
+
+ return UpdateMinReturnPercentageRate.fromBcs( typeArg, fromB64(data.bcs.bcsBytes) ); } if (data.content) { return UpdateMinReturnPercentageRate.fromSuiParsedData( typeArg, data.content ) } throw new Error( "Both `bcs` and `content` fields are missing from the data. Include `showBcs` or `showContent` in the request." ); }
+
+ static async fetch<T extends PhantomReified<PhantomTypeArgument>>( client: SuiClient, typeArg: T, id: string ): Promise<UpdateMinReturnPercentageRate<ToPhantomTypeArgument<T>>> { const res = await client.getObject({ id, options: { showBcs: true, }, }); if (res.error) { throw new Error(`error fetching UpdateMinReturnPercentageRate object at id ${id}: ${res.error.code}`); } if (res.data?.bcs?.dataType !== "moveObject" || !isUpdateMinReturnPercentageRate(res.data.bcs.type)) { throw new Error(`object at id ${id} is not a UpdateMinReturnPercentageRate object`); }
+
+ return UpdateMinReturnPercentageRate.fromSuiObjectData( typeArg, res.data ); }
+
+ }
+
+/* ============================== WithdrawPenaltyFee =============================== */
+
+export function isWithdrawPenaltyFee(type: string): boolean { type = compressSuiType(type); return type.startsWith(`${PKG_V1}::events::WithdrawPenaltyFee` + '<'); }
+
+export interface WithdrawPenaltyFeeFields<T extends PhantomTypeArgument> { deCenterId: ToField<ID>; value: ToField<"u64"> }
+
+export type WithdrawPenaltyFeeReified<T extends PhantomTypeArgument> = Reified< WithdrawPenaltyFee<T>, WithdrawPenaltyFeeFields<T> >;
+
+export class WithdrawPenaltyFee<T extends PhantomTypeArgument> implements StructClass { __StructClass = true as const;
+
+ static readonly $typeName = `${PKG_V1}::events::WithdrawPenaltyFee`; static readonly $numTypeParams = 1; static readonly $isPhantom = [true,] as const;
+
+ readonly $typeName = WithdrawPenaltyFee.$typeName; readonly $fullTypeName: `${typeof PKG_V1}::events::WithdrawPenaltyFee<${PhantomToTypeStr<T>}>`; readonly $typeArgs: [PhantomToTypeStr<T>]; readonly $isPhantom = WithdrawPenaltyFee.$isPhantom;
+
+ readonly deCenterId: ToField<ID>; readonly value: ToField<"u64">
+
+ private constructor(typeArgs: [PhantomToTypeStr<T>], fields: WithdrawPenaltyFeeFields<T>, ) { this.$fullTypeName = composeSuiType( WithdrawPenaltyFee.$typeName, ...typeArgs ) as `${typeof PKG_V1}::events::WithdrawPenaltyFee<${PhantomToTypeStr<T>}>`; this.$typeArgs = typeArgs;
+
+ this.deCenterId = fields.deCenterId;; this.value = fields.value; }
+
+ static reified<T extends PhantomReified<PhantomTypeArgument>>( T: T ): WithdrawPenaltyFeeReified<ToPhantomTypeArgument<T>> { const reifiedBcs = WithdrawPenaltyFee.bcs; return { typeName: WithdrawPenaltyFee.$typeName, fullTypeName: composeSuiType( WithdrawPenaltyFee.$typeName, ...[extractType(T)] ) as `${typeof PKG_V1}::events::WithdrawPenaltyFee<${PhantomToTypeStr<ToPhantomTypeArgument<T>>}>`, typeArgs: [ extractType(T) ] as [PhantomToTypeStr<ToPhantomTypeArgument<T>>], isPhantom: WithdrawPenaltyFee.$isPhantom, reifiedTypeArgs: [T], fromFields: (fields: Record<string, any>) => WithdrawPenaltyFee.fromFields( T, fields, ), fromFieldsWithTypes: (item: FieldsWithTypes) => WithdrawPenaltyFee.fromFieldsWithTypes( T, item, ), fromBcs: (data: Uint8Array) => WithdrawPenaltyFee.fromFields( T, reifiedBcs.parse(data) ), bcs: reifiedBcs, fromJSONField: (field: any) => WithdrawPenaltyFee.fromJSONField( T, field, ), fromJSON: (json: Record<string, any>) => WithdrawPenaltyFee.fromJSON( T, json, ), fromSuiParsedData: (content: SuiParsedData) => WithdrawPenaltyFee.fromSuiParsedData( T, content, ), fromSuiObjectData: (content: SuiObjectData) => WithdrawPenaltyFee.fromSuiObjectData( T, content, ), fetch: async (client: SuiClient, id: string) => WithdrawPenaltyFee.fetch( client, T, id, ), new: ( fields: WithdrawPenaltyFeeFields<ToPhantomTypeArgument<T>>, ) => { return new WithdrawPenaltyFee( [extractType(T)], fields ) }, kind: "StructClassReified", } }
+
+ static get r() { return WithdrawPenaltyFee.reified }
+
+ static phantom<T extends PhantomReified<PhantomTypeArgument>>( T: T ): PhantomReified<ToTypeStr<WithdrawPenaltyFee<ToPhantomTypeArgument<T>>>> { return phantom(WithdrawPenaltyFee.reified( T )); } static get p() { return WithdrawPenaltyFee.phantom }
+
+ private static instantiateBcs() { return bcs.struct("WithdrawPenaltyFee", {
+
+ de_center_id: ID.bcs, value: bcs.u64()
+
+}) };
+
+ private static cachedBcs: ReturnType<typeof WithdrawPenaltyFee.instantiateBcs> | null = null;
+
+ static get bcs() { if (!WithdrawPenaltyFee.cachedBcs) { WithdrawPenaltyFee.cachedBcs = WithdrawPenaltyFee.instantiateBcs() } return WithdrawPenaltyFee.cachedBcs };
+
+ static fromFields<T extends PhantomReified<PhantomTypeArgument>>( typeArg: T, fields: Record<string, any> ): WithdrawPenaltyFee<ToPhantomTypeArgument<T>> { return WithdrawPenaltyFee.reified( typeArg, ).new( { deCenterId: decodeFromFields(ID.reified(), fields.de_center_id), value: decodeFromFields("u64", fields.value) } ) }
+
+ static fromFieldsWithTypes<T extends PhantomReified<PhantomTypeArgument>>( typeArg: T, item: FieldsWithTypes ): WithdrawPenaltyFee<ToPhantomTypeArgument<T>> { if (!isWithdrawPenaltyFee(item.type)) { throw new Error("not a WithdrawPenaltyFee type");
+
+ } assertFieldsWithTypesArgsMatch(item, [typeArg]);
+
+ return WithdrawPenaltyFee.reified( typeArg, ).new( { deCenterId: decodeFromFieldsWithTypes(ID.reified(), item.fields.de_center_id), value: decodeFromFieldsWithTypes("u64", item.fields.value) } ) }
+
+ static fromBcs<T extends PhantomReified<PhantomTypeArgument>>( typeArg: T, data: Uint8Array ): WithdrawPenaltyFee<ToPhantomTypeArgument<T>> { return WithdrawPenaltyFee.fromFields( typeArg, WithdrawPenaltyFee.bcs.parse(data) ) }
+
+ toJSONField() { return {
+
+ deCenterId: this.deCenterId,value: this.value.toString(),
+
+} }
+
+ toJSON() { return { $typeName: this.$typeName, $typeArgs: this.$typeArgs, ...this.toJSONField() } }
+
+ static fromJSONField<T extends PhantomReified<PhantomTypeArgument>>( typeArg: T, field: any ): WithdrawPenaltyFee<ToPhantomTypeArgument<T>> { return WithdrawPenaltyFee.reified( typeArg, ).new( { deCenterId: decodeFromJSONField(ID.reified(), field.deCenterId), value: decodeFromJSONField("u64", field.value) } ) }
+
+ static fromJSON<T extends PhantomReified<PhantomTypeArgument>>( typeArg: T, json: Record<string, any> ): WithdrawPenaltyFee<ToPhantomTypeArgument<T>> { if (json.$typeName !== WithdrawPenaltyFee.$typeName) { throw new Error("not a WithTwoGenerics json object") }; assertReifiedTypeArgsMatch( composeSuiType(WithdrawPenaltyFee.$typeName, extractType(typeArg)), json.$typeArgs, [typeArg], )
+
+ return WithdrawPenaltyFee.fromJSONField( typeArg, json, ) }
+
+ static fromSuiParsedData<T extends PhantomReified<PhantomTypeArgument>>( typeArg: T, content: SuiParsedData ): WithdrawPenaltyFee<ToPhantomTypeArgument<T>> { if (content.dataType !== "moveObject") { throw new Error("not an object"); } if (!isWithdrawPenaltyFee(content.type)) { throw new Error(`object at ${(content.fields as any).id} is not a WithdrawPenaltyFee object`); } return WithdrawPenaltyFee.fromFieldsWithTypes( typeArg, content ); }
+
+ static fromSuiObjectData<T extends PhantomReified<PhantomTypeArgument>>( typeArg: T, data: SuiObjectData ): WithdrawPenaltyFee<ToPhantomTypeArgument<T>> { if (data.bcs) { if (data.bcs.dataType !== "moveObject" || !isWithdrawPenaltyFee(data.bcs.type)) { throw new Error(`object at is not a WithdrawPenaltyFee object`); }
+
+ const gotTypeArgs = parseTypeName(data.bcs.type).typeArgs; if (gotTypeArgs.length !== 1) { throw new Error(`type argument mismatch: expected 1 type argument but got '${gotTypeArgs.length}'`); }; const gotTypeArg = compressSuiType(gotTypeArgs[0]); const expectedTypeArg = compressSuiType(extractType(typeArg)); if (gotTypeArg !== compressSuiType(extractType(typeArg))) { throw new Error(`type argument mismatch: expected '${expectedTypeArg}' but got '${gotTypeArg}'`); };
+
+ return WithdrawPenaltyFee.fromBcs( typeArg, fromB64(data.bcs.bcsBytes) ); } if (data.content) { return WithdrawPenaltyFee.fromSuiParsedData( typeArg, data.content ) } throw new Error( "Both `bcs` and `content` fields are missing from the data. Include `showBcs` or `showContent` in the request." ); }
+
+ static async fetch<T extends PhantomReified<PhantomTypeArgument>>( client: SuiClient, typeArg: T, id: string ): Promise<WithdrawPenaltyFee<ToPhantomTypeArgument<T>>> { const res = await client.getObject({ id, options: { showBcs: true, }, }); if (res.error) { throw new Error(`error fetching WithdrawPenaltyFee object at id ${id}: ${res.error.code}`); } if (res.data?.bcs?.dataType !== "moveObject" || !isWithdrawPenaltyFee(res.data.bcs.type)) { throw new Error(`object at id ${id} is not a WithdrawPenaltyFee object`); }
+
+ return WithdrawPenaltyFee.fromSuiObjectData( typeArg, res.data ); }
+
+ }
+
 /* ============================== LockEvent =============================== */
 
 export function isLockEvent(type: string): boolean { type = compressSuiType(type); return type.startsWith(`${PKG_V1}::events::LockEvent` + '<'); }
@@ -154,51 +376,51 @@ export class LockEvent<T extends PhantomTypeArgument> implements StructClass { _
 
  }
 
-/* ============================== RequestUnlocKEvent =============================== */
+/* ============================== RequestUnlockEvent =============================== */
 
-export function isRequestUnlocKEvent(type: string): boolean { type = compressSuiType(type); return type.startsWith(`${PKG_V1}::events::RequestUnlocKEvent` + '<'); }
+export function isRequestUnlockEvent(type: string): boolean { type = compressSuiType(type); return type.startsWith(`${PKG_V1}::events::RequestUnlockEvent` + '<'); }
 
-export interface RequestUnlocKEventFields<T extends PhantomTypeArgument> { deTokenId: ToField<ID>; unlockedBalance: ToField<"u64">; unlockedDuration: ToField<"u64">; unlockedAt: ToField<"u64">; timestamp: ToField<"u64"> }
+export interface RequestUnlockEventFields<T extends PhantomTypeArgument> { deTokenId: ToField<ID>; unlockedBalance: ToField<"u64">; unlockedDuration: ToField<"u64">; unlockedAt: ToField<"u64">; timestamp: ToField<"u64"> }
 
-export type RequestUnlocKEventReified<T extends PhantomTypeArgument> = Reified< RequestUnlocKEvent<T>, RequestUnlocKEventFields<T> >;
+export type RequestUnlockEventReified<T extends PhantomTypeArgument> = Reified< RequestUnlockEvent<T>, RequestUnlockEventFields<T> >;
 
-export class RequestUnlocKEvent<T extends PhantomTypeArgument> implements StructClass { __StructClass = true as const;
+export class RequestUnlockEvent<T extends PhantomTypeArgument> implements StructClass { __StructClass = true as const;
 
- static readonly $typeName = `${PKG_V1}::events::RequestUnlocKEvent`; static readonly $numTypeParams = 1; static readonly $isPhantom = [true,] as const;
+ static readonly $typeName = `${PKG_V1}::events::RequestUnlockEvent`; static readonly $numTypeParams = 1; static readonly $isPhantom = [true,] as const;
 
- readonly $typeName = RequestUnlocKEvent.$typeName; readonly $fullTypeName: `${typeof PKG_V1}::events::RequestUnlocKEvent<${PhantomToTypeStr<T>}>`; readonly $typeArgs: [PhantomToTypeStr<T>]; readonly $isPhantom = RequestUnlocKEvent.$isPhantom;
+ readonly $typeName = RequestUnlockEvent.$typeName; readonly $fullTypeName: `${typeof PKG_V1}::events::RequestUnlockEvent<${PhantomToTypeStr<T>}>`; readonly $typeArgs: [PhantomToTypeStr<T>]; readonly $isPhantom = RequestUnlockEvent.$isPhantom;
 
  readonly deTokenId: ToField<ID>; readonly unlockedBalance: ToField<"u64">; readonly unlockedDuration: ToField<"u64">; readonly unlockedAt: ToField<"u64">; readonly timestamp: ToField<"u64">
 
- private constructor(typeArgs: [PhantomToTypeStr<T>], fields: RequestUnlocKEventFields<T>, ) { this.$fullTypeName = composeSuiType( RequestUnlocKEvent.$typeName, ...typeArgs ) as `${typeof PKG_V1}::events::RequestUnlocKEvent<${PhantomToTypeStr<T>}>`; this.$typeArgs = typeArgs;
+ private constructor(typeArgs: [PhantomToTypeStr<T>], fields: RequestUnlockEventFields<T>, ) { this.$fullTypeName = composeSuiType( RequestUnlockEvent.$typeName, ...typeArgs ) as `${typeof PKG_V1}::events::RequestUnlockEvent<${PhantomToTypeStr<T>}>`; this.$typeArgs = typeArgs;
 
  this.deTokenId = fields.deTokenId;; this.unlockedBalance = fields.unlockedBalance;; this.unlockedDuration = fields.unlockedDuration;; this.unlockedAt = fields.unlockedAt;; this.timestamp = fields.timestamp; }
 
- static reified<T extends PhantomReified<PhantomTypeArgument>>( T: T ): RequestUnlocKEventReified<ToPhantomTypeArgument<T>> { const reifiedBcs = RequestUnlocKEvent.bcs; return { typeName: RequestUnlocKEvent.$typeName, fullTypeName: composeSuiType( RequestUnlocKEvent.$typeName, ...[extractType(T)] ) as `${typeof PKG_V1}::events::RequestUnlocKEvent<${PhantomToTypeStr<ToPhantomTypeArgument<T>>}>`, typeArgs: [ extractType(T) ] as [PhantomToTypeStr<ToPhantomTypeArgument<T>>], isPhantom: RequestUnlocKEvent.$isPhantom, reifiedTypeArgs: [T], fromFields: (fields: Record<string, any>) => RequestUnlocKEvent.fromFields( T, fields, ), fromFieldsWithTypes: (item: FieldsWithTypes) => RequestUnlocKEvent.fromFieldsWithTypes( T, item, ), fromBcs: (data: Uint8Array) => RequestUnlocKEvent.fromFields( T, reifiedBcs.parse(data) ), bcs: reifiedBcs, fromJSONField: (field: any) => RequestUnlocKEvent.fromJSONField( T, field, ), fromJSON: (json: Record<string, any>) => RequestUnlocKEvent.fromJSON( T, json, ), fromSuiParsedData: (content: SuiParsedData) => RequestUnlocKEvent.fromSuiParsedData( T, content, ), fromSuiObjectData: (content: SuiObjectData) => RequestUnlocKEvent.fromSuiObjectData( T, content, ), fetch: async (client: SuiClient, id: string) => RequestUnlocKEvent.fetch( client, T, id, ), new: ( fields: RequestUnlocKEventFields<ToPhantomTypeArgument<T>>, ) => { return new RequestUnlocKEvent( [extractType(T)], fields ) }, kind: "StructClassReified", } }
+ static reified<T extends PhantomReified<PhantomTypeArgument>>( T: T ): RequestUnlockEventReified<ToPhantomTypeArgument<T>> { const reifiedBcs = RequestUnlockEvent.bcs; return { typeName: RequestUnlockEvent.$typeName, fullTypeName: composeSuiType( RequestUnlockEvent.$typeName, ...[extractType(T)] ) as `${typeof PKG_V1}::events::RequestUnlockEvent<${PhantomToTypeStr<ToPhantomTypeArgument<T>>}>`, typeArgs: [ extractType(T) ] as [PhantomToTypeStr<ToPhantomTypeArgument<T>>], isPhantom: RequestUnlockEvent.$isPhantom, reifiedTypeArgs: [T], fromFields: (fields: Record<string, any>) => RequestUnlockEvent.fromFields( T, fields, ), fromFieldsWithTypes: (item: FieldsWithTypes) => RequestUnlockEvent.fromFieldsWithTypes( T, item, ), fromBcs: (data: Uint8Array) => RequestUnlockEvent.fromFields( T, reifiedBcs.parse(data) ), bcs: reifiedBcs, fromJSONField: (field: any) => RequestUnlockEvent.fromJSONField( T, field, ), fromJSON: (json: Record<string, any>) => RequestUnlockEvent.fromJSON( T, json, ), fromSuiParsedData: (content: SuiParsedData) => RequestUnlockEvent.fromSuiParsedData( T, content, ), fromSuiObjectData: (content: SuiObjectData) => RequestUnlockEvent.fromSuiObjectData( T, content, ), fetch: async (client: SuiClient, id: string) => RequestUnlockEvent.fetch( client, T, id, ), new: ( fields: RequestUnlockEventFields<ToPhantomTypeArgument<T>>, ) => { return new RequestUnlockEvent( [extractType(T)], fields ) }, kind: "StructClassReified", } }
 
- static get r() { return RequestUnlocKEvent.reified }
+ static get r() { return RequestUnlockEvent.reified }
 
- static phantom<T extends PhantomReified<PhantomTypeArgument>>( T: T ): PhantomReified<ToTypeStr<RequestUnlocKEvent<ToPhantomTypeArgument<T>>>> { return phantom(RequestUnlocKEvent.reified( T )); } static get p() { return RequestUnlocKEvent.phantom }
+ static phantom<T extends PhantomReified<PhantomTypeArgument>>( T: T ): PhantomReified<ToTypeStr<RequestUnlockEvent<ToPhantomTypeArgument<T>>>> { return phantom(RequestUnlockEvent.reified( T )); } static get p() { return RequestUnlockEvent.phantom }
 
- private static instantiateBcs() { return bcs.struct("RequestUnlocKEvent", {
+ private static instantiateBcs() { return bcs.struct("RequestUnlockEvent", {
 
  de_token_id: ID.bcs, unlocked_balance: bcs.u64(), unlocked_duration: bcs.u64(), unlocked_at: bcs.u64(), timestamp: bcs.u64()
 
 }) };
 
- private static cachedBcs: ReturnType<typeof RequestUnlocKEvent.instantiateBcs> | null = null;
+ private static cachedBcs: ReturnType<typeof RequestUnlockEvent.instantiateBcs> | null = null;
 
- static get bcs() { if (!RequestUnlocKEvent.cachedBcs) { RequestUnlocKEvent.cachedBcs = RequestUnlocKEvent.instantiateBcs() } return RequestUnlocKEvent.cachedBcs };
+ static get bcs() { if (!RequestUnlockEvent.cachedBcs) { RequestUnlockEvent.cachedBcs = RequestUnlockEvent.instantiateBcs() } return RequestUnlockEvent.cachedBcs };
 
- static fromFields<T extends PhantomReified<PhantomTypeArgument>>( typeArg: T, fields: Record<string, any> ): RequestUnlocKEvent<ToPhantomTypeArgument<T>> { return RequestUnlocKEvent.reified( typeArg, ).new( { deTokenId: decodeFromFields(ID.reified(), fields.de_token_id), unlockedBalance: decodeFromFields("u64", fields.unlocked_balance), unlockedDuration: decodeFromFields("u64", fields.unlocked_duration), unlockedAt: decodeFromFields("u64", fields.unlocked_at), timestamp: decodeFromFields("u64", fields.timestamp) } ) }
+ static fromFields<T extends PhantomReified<PhantomTypeArgument>>( typeArg: T, fields: Record<string, any> ): RequestUnlockEvent<ToPhantomTypeArgument<T>> { return RequestUnlockEvent.reified( typeArg, ).new( { deTokenId: decodeFromFields(ID.reified(), fields.de_token_id), unlockedBalance: decodeFromFields("u64", fields.unlocked_balance), unlockedDuration: decodeFromFields("u64", fields.unlocked_duration), unlockedAt: decodeFromFields("u64", fields.unlocked_at), timestamp: decodeFromFields("u64", fields.timestamp) } ) }
 
- static fromFieldsWithTypes<T extends PhantomReified<PhantomTypeArgument>>( typeArg: T, item: FieldsWithTypes ): RequestUnlocKEvent<ToPhantomTypeArgument<T>> { if (!isRequestUnlocKEvent(item.type)) { throw new Error("not a RequestUnlocKEvent type");
+ static fromFieldsWithTypes<T extends PhantomReified<PhantomTypeArgument>>( typeArg: T, item: FieldsWithTypes ): RequestUnlockEvent<ToPhantomTypeArgument<T>> { if (!isRequestUnlockEvent(item.type)) { throw new Error("not a RequestUnlockEvent type");
 
  } assertFieldsWithTypesArgsMatch(item, [typeArg]);
 
- return RequestUnlocKEvent.reified( typeArg, ).new( { deTokenId: decodeFromFieldsWithTypes(ID.reified(), item.fields.de_token_id), unlockedBalance: decodeFromFieldsWithTypes("u64", item.fields.unlocked_balance), unlockedDuration: decodeFromFieldsWithTypes("u64", item.fields.unlocked_duration), unlockedAt: decodeFromFieldsWithTypes("u64", item.fields.unlocked_at), timestamp: decodeFromFieldsWithTypes("u64", item.fields.timestamp) } ) }
+ return RequestUnlockEvent.reified( typeArg, ).new( { deTokenId: decodeFromFieldsWithTypes(ID.reified(), item.fields.de_token_id), unlockedBalance: decodeFromFieldsWithTypes("u64", item.fields.unlocked_balance), unlockedDuration: decodeFromFieldsWithTypes("u64", item.fields.unlocked_duration), unlockedAt: decodeFromFieldsWithTypes("u64", item.fields.unlocked_at), timestamp: decodeFromFieldsWithTypes("u64", item.fields.timestamp) } ) }
 
- static fromBcs<T extends PhantomReified<PhantomTypeArgument>>( typeArg: T, data: Uint8Array ): RequestUnlocKEvent<ToPhantomTypeArgument<T>> { return RequestUnlocKEvent.fromFields( typeArg, RequestUnlocKEvent.bcs.parse(data) ) }
+ static fromBcs<T extends PhantomReified<PhantomTypeArgument>>( typeArg: T, data: Uint8Array ): RequestUnlockEvent<ToPhantomTypeArgument<T>> { return RequestUnlockEvent.fromFields( typeArg, RequestUnlockEvent.bcs.parse(data) ) }
 
  toJSONField() { return {
 
@@ -208,23 +430,23 @@ export class RequestUnlocKEvent<T extends PhantomTypeArgument> implements Struct
 
  toJSON() { return { $typeName: this.$typeName, $typeArgs: this.$typeArgs, ...this.toJSONField() } }
 
- static fromJSONField<T extends PhantomReified<PhantomTypeArgument>>( typeArg: T, field: any ): RequestUnlocKEvent<ToPhantomTypeArgument<T>> { return RequestUnlocKEvent.reified( typeArg, ).new( { deTokenId: decodeFromJSONField(ID.reified(), field.deTokenId), unlockedBalance: decodeFromJSONField("u64", field.unlockedBalance), unlockedDuration: decodeFromJSONField("u64", field.unlockedDuration), unlockedAt: decodeFromJSONField("u64", field.unlockedAt), timestamp: decodeFromJSONField("u64", field.timestamp) } ) }
+ static fromJSONField<T extends PhantomReified<PhantomTypeArgument>>( typeArg: T, field: any ): RequestUnlockEvent<ToPhantomTypeArgument<T>> { return RequestUnlockEvent.reified( typeArg, ).new( { deTokenId: decodeFromJSONField(ID.reified(), field.deTokenId), unlockedBalance: decodeFromJSONField("u64", field.unlockedBalance), unlockedDuration: decodeFromJSONField("u64", field.unlockedDuration), unlockedAt: decodeFromJSONField("u64", field.unlockedAt), timestamp: decodeFromJSONField("u64", field.timestamp) } ) }
 
- static fromJSON<T extends PhantomReified<PhantomTypeArgument>>( typeArg: T, json: Record<string, any> ): RequestUnlocKEvent<ToPhantomTypeArgument<T>> { if (json.$typeName !== RequestUnlocKEvent.$typeName) { throw new Error("not a WithTwoGenerics json object") }; assertReifiedTypeArgsMatch( composeSuiType(RequestUnlocKEvent.$typeName, extractType(typeArg)), json.$typeArgs, [typeArg], )
+ static fromJSON<T extends PhantomReified<PhantomTypeArgument>>( typeArg: T, json: Record<string, any> ): RequestUnlockEvent<ToPhantomTypeArgument<T>> { if (json.$typeName !== RequestUnlockEvent.$typeName) { throw new Error("not a WithTwoGenerics json object") }; assertReifiedTypeArgsMatch( composeSuiType(RequestUnlockEvent.$typeName, extractType(typeArg)), json.$typeArgs, [typeArg], )
 
- return RequestUnlocKEvent.fromJSONField( typeArg, json, ) }
+ return RequestUnlockEvent.fromJSONField( typeArg, json, ) }
 
- static fromSuiParsedData<T extends PhantomReified<PhantomTypeArgument>>( typeArg: T, content: SuiParsedData ): RequestUnlocKEvent<ToPhantomTypeArgument<T>> { if (content.dataType !== "moveObject") { throw new Error("not an object"); } if (!isRequestUnlocKEvent(content.type)) { throw new Error(`object at ${(content.fields as any).id} is not a RequestUnlocKEvent object`); } return RequestUnlocKEvent.fromFieldsWithTypes( typeArg, content ); }
+ static fromSuiParsedData<T extends PhantomReified<PhantomTypeArgument>>( typeArg: T, content: SuiParsedData ): RequestUnlockEvent<ToPhantomTypeArgument<T>> { if (content.dataType !== "moveObject") { throw new Error("not an object"); } if (!isRequestUnlockEvent(content.type)) { throw new Error(`object at ${(content.fields as any).id} is not a RequestUnlockEvent object`); } return RequestUnlockEvent.fromFieldsWithTypes( typeArg, content ); }
 
- static fromSuiObjectData<T extends PhantomReified<PhantomTypeArgument>>( typeArg: T, data: SuiObjectData ): RequestUnlocKEvent<ToPhantomTypeArgument<T>> { if (data.bcs) { if (data.bcs.dataType !== "moveObject" || !isRequestUnlocKEvent(data.bcs.type)) { throw new Error(`object at is not a RequestUnlocKEvent object`); }
+ static fromSuiObjectData<T extends PhantomReified<PhantomTypeArgument>>( typeArg: T, data: SuiObjectData ): RequestUnlockEvent<ToPhantomTypeArgument<T>> { if (data.bcs) { if (data.bcs.dataType !== "moveObject" || !isRequestUnlockEvent(data.bcs.type)) { throw new Error(`object at is not a RequestUnlockEvent object`); }
 
  const gotTypeArgs = parseTypeName(data.bcs.type).typeArgs; if (gotTypeArgs.length !== 1) { throw new Error(`type argument mismatch: expected 1 type argument but got '${gotTypeArgs.length}'`); }; const gotTypeArg = compressSuiType(gotTypeArgs[0]); const expectedTypeArg = compressSuiType(extractType(typeArg)); if (gotTypeArg !== compressSuiType(extractType(typeArg))) { throw new Error(`type argument mismatch: expected '${expectedTypeArg}' but got '${gotTypeArg}'`); };
 
- return RequestUnlocKEvent.fromBcs( typeArg, fromB64(data.bcs.bcsBytes) ); } if (data.content) { return RequestUnlocKEvent.fromSuiParsedData( typeArg, data.content ) } throw new Error( "Both `bcs` and `content` fields are missing from the data. Include `showBcs` or `showContent` in the request." ); }
+ return RequestUnlockEvent.fromBcs( typeArg, fromB64(data.bcs.bcsBytes) ); } if (data.content) { return RequestUnlockEvent.fromSuiParsedData( typeArg, data.content ) } throw new Error( "Both `bcs` and `content` fields are missing from the data. Include `showBcs` or `showContent` in the request." ); }
 
- static async fetch<T extends PhantomReified<PhantomTypeArgument>>( client: SuiClient, typeArg: T, id: string ): Promise<RequestUnlocKEvent<ToPhantomTypeArgument<T>>> { const res = await client.getObject({ id, options: { showBcs: true, }, }); if (res.error) { throw new Error(`error fetching RequestUnlocKEvent object at id ${id}: ${res.error.code}`); } if (res.data?.bcs?.dataType !== "moveObject" || !isRequestUnlocKEvent(res.data.bcs.type)) { throw new Error(`object at id ${id} is not a RequestUnlocKEvent object`); }
+ static async fetch<T extends PhantomReified<PhantomTypeArgument>>( client: SuiClient, typeArg: T, id: string ): Promise<RequestUnlockEvent<ToPhantomTypeArgument<T>>> { const res = await client.getObject({ id, options: { showBcs: true, }, }); if (res.error) { throw new Error(`error fetching RequestUnlockEvent object at id ${id}: ${res.error.code}`); } if (res.data?.bcs?.dataType !== "moveObject" || !isRequestUnlockEvent(res.data.bcs.type)) { throw new Error(`object at id ${id} is not a RequestUnlockEvent object`); }
 
- return RequestUnlocKEvent.fromSuiObjectData( typeArg, res.data ); }
+ return RequestUnlockEvent.fromSuiObjectData( typeArg, res.data ); }
 
  }
 
