@@ -12,6 +12,7 @@ import {
   burn,
   cancelUnlockRequest,
   claim,
+  increaseLockedAmount,
   lock,
   requestUnlock,
   updateDuration,
@@ -190,6 +191,18 @@ export class DeTokenClient {
       self: tx.object(this.deCenter.id),
       lockedBalance,
       recipient,
+    });
+  }
+
+  increaseLockedAmountMoveCall(
+    tx: Transaction,
+    deTokenId: string,
+    lockedBalance: TransactionObjectInput,
+  ) {
+    increaseLockedAmount(tx, this.deCenter.$typeArgs[0], {
+      self: tx.object(this.deCenter.id),
+      deToken: tx.object(deTokenId),
+      lockedBalance,
     });
   }
 
