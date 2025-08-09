@@ -54,6 +54,10 @@ export interface LockArgs { self: TransactionObjectInput; lockedBalance: Transac
 
 export function lock( tx: Transaction, typeArg: string, args: LockArgs ) { return tx.moveCall({ target: `${PUBLISHED_AT}::de_center::lock`, typeArguments: [typeArg], arguments: [ obj(tx, args.self), obj(tx, args.lockedBalance), pure(tx, args.recipient, `address`) ], }) }
 
+export interface IncreaseLockedAmountArgs { self: TransactionObjectInput; deToken: TransactionObjectInput; lockedBalance: TransactionObjectInput }
+
+export function increaseLockedAmount( tx: Transaction, typeArg: string, args: IncreaseLockedAmountArgs ) { return tx.moveCall({ target: `${PUBLISHED_AT}::de_center::increase_locked_amount`, typeArguments: [typeArg], arguments: [ obj(tx, args.self), obj(tx, args.deToken), obj(tx, args.lockedBalance) ], }) }
+
 export interface RequestUnlockArgs { self: TransactionObjectInput; deToken: TransactionObjectInput; value: bigint | TransactionArgument; unlockedDuration: bigint | TransactionArgument; clock: TransactionObjectInput }
 
 export function requestUnlock( tx: Transaction, typeArg: string, args: RequestUnlockArgs ) { return tx.moveCall({ target: `${PUBLISHED_AT}::de_center::request_unlock`, typeArguments: [typeArg], arguments: [ obj(tx, args.self), obj(tx, args.deToken), pure(tx, args.value, `u64`), pure(tx, args.unlockedDuration, `u64`), obj(tx, args.clock) ], }) }

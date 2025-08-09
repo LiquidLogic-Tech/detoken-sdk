@@ -376,6 +376,80 @@ export class LockEvent<T extends PhantomTypeArgument> implements StructClass { _
 
  }
 
+/* ============================== IncreaseLockedAmountEvent =============================== */
+
+export function isIncreaseLockedAmountEvent(type: string): boolean { type = compressSuiType(type); return type.startsWith(`${PKG_V1}::events::IncreaseLockedAmountEvent` + '<'); }
+
+export interface IncreaseLockedAmountEventFields<T extends PhantomTypeArgument> { deTokenId: ToField<ID>; lockedBalance: ToField<"u64"> }
+
+export type IncreaseLockedAmountEventReified<T extends PhantomTypeArgument> = Reified< IncreaseLockedAmountEvent<T>, IncreaseLockedAmountEventFields<T> >;
+
+export class IncreaseLockedAmountEvent<T extends PhantomTypeArgument> implements StructClass { __StructClass = true as const;
+
+ static readonly $typeName = `${PKG_V1}::events::IncreaseLockedAmountEvent`; static readonly $numTypeParams = 1; static readonly $isPhantom = [true,] as const;
+
+ readonly $typeName = IncreaseLockedAmountEvent.$typeName; readonly $fullTypeName: `${typeof PKG_V1}::events::IncreaseLockedAmountEvent<${PhantomToTypeStr<T>}>`; readonly $typeArgs: [PhantomToTypeStr<T>]; readonly $isPhantom = IncreaseLockedAmountEvent.$isPhantom;
+
+ readonly deTokenId: ToField<ID>; readonly lockedBalance: ToField<"u64">
+
+ private constructor(typeArgs: [PhantomToTypeStr<T>], fields: IncreaseLockedAmountEventFields<T>, ) { this.$fullTypeName = composeSuiType( IncreaseLockedAmountEvent.$typeName, ...typeArgs ) as `${typeof PKG_V1}::events::IncreaseLockedAmountEvent<${PhantomToTypeStr<T>}>`; this.$typeArgs = typeArgs;
+
+ this.deTokenId = fields.deTokenId;; this.lockedBalance = fields.lockedBalance; }
+
+ static reified<T extends PhantomReified<PhantomTypeArgument>>( T: T ): IncreaseLockedAmountEventReified<ToPhantomTypeArgument<T>> { const reifiedBcs = IncreaseLockedAmountEvent.bcs; return { typeName: IncreaseLockedAmountEvent.$typeName, fullTypeName: composeSuiType( IncreaseLockedAmountEvent.$typeName, ...[extractType(T)] ) as `${typeof PKG_V1}::events::IncreaseLockedAmountEvent<${PhantomToTypeStr<ToPhantomTypeArgument<T>>}>`, typeArgs: [ extractType(T) ] as [PhantomToTypeStr<ToPhantomTypeArgument<T>>], isPhantom: IncreaseLockedAmountEvent.$isPhantom, reifiedTypeArgs: [T], fromFields: (fields: Record<string, any>) => IncreaseLockedAmountEvent.fromFields( T, fields, ), fromFieldsWithTypes: (item: FieldsWithTypes) => IncreaseLockedAmountEvent.fromFieldsWithTypes( T, item, ), fromBcs: (data: Uint8Array) => IncreaseLockedAmountEvent.fromFields( T, reifiedBcs.parse(data) ), bcs: reifiedBcs, fromJSONField: (field: any) => IncreaseLockedAmountEvent.fromJSONField( T, field, ), fromJSON: (json: Record<string, any>) => IncreaseLockedAmountEvent.fromJSON( T, json, ), fromSuiParsedData: (content: SuiParsedData) => IncreaseLockedAmountEvent.fromSuiParsedData( T, content, ), fromSuiObjectData: (content: SuiObjectData) => IncreaseLockedAmountEvent.fromSuiObjectData( T, content, ), fetch: async (client: SuiClient, id: string) => IncreaseLockedAmountEvent.fetch( client, T, id, ), new: ( fields: IncreaseLockedAmountEventFields<ToPhantomTypeArgument<T>>, ) => { return new IncreaseLockedAmountEvent( [extractType(T)], fields ) }, kind: "StructClassReified", } }
+
+ static get r() { return IncreaseLockedAmountEvent.reified }
+
+ static phantom<T extends PhantomReified<PhantomTypeArgument>>( T: T ): PhantomReified<ToTypeStr<IncreaseLockedAmountEvent<ToPhantomTypeArgument<T>>>> { return phantom(IncreaseLockedAmountEvent.reified( T )); } static get p() { return IncreaseLockedAmountEvent.phantom }
+
+ private static instantiateBcs() { return bcs.struct("IncreaseLockedAmountEvent", {
+
+ de_token_id: ID.bcs, locked_balance: bcs.u64()
+
+}) };
+
+ private static cachedBcs: ReturnType<typeof IncreaseLockedAmountEvent.instantiateBcs> | null = null;
+
+ static get bcs() { if (!IncreaseLockedAmountEvent.cachedBcs) { IncreaseLockedAmountEvent.cachedBcs = IncreaseLockedAmountEvent.instantiateBcs() } return IncreaseLockedAmountEvent.cachedBcs };
+
+ static fromFields<T extends PhantomReified<PhantomTypeArgument>>( typeArg: T, fields: Record<string, any> ): IncreaseLockedAmountEvent<ToPhantomTypeArgument<T>> { return IncreaseLockedAmountEvent.reified( typeArg, ).new( { deTokenId: decodeFromFields(ID.reified(), fields.de_token_id), lockedBalance: decodeFromFields("u64", fields.locked_balance) } ) }
+
+ static fromFieldsWithTypes<T extends PhantomReified<PhantomTypeArgument>>( typeArg: T, item: FieldsWithTypes ): IncreaseLockedAmountEvent<ToPhantomTypeArgument<T>> { if (!isIncreaseLockedAmountEvent(item.type)) { throw new Error("not a IncreaseLockedAmountEvent type");
+
+ } assertFieldsWithTypesArgsMatch(item, [typeArg]);
+
+ return IncreaseLockedAmountEvent.reified( typeArg, ).new( { deTokenId: decodeFromFieldsWithTypes(ID.reified(), item.fields.de_token_id), lockedBalance: decodeFromFieldsWithTypes("u64", item.fields.locked_balance) } ) }
+
+ static fromBcs<T extends PhantomReified<PhantomTypeArgument>>( typeArg: T, data: Uint8Array ): IncreaseLockedAmountEvent<ToPhantomTypeArgument<T>> { return IncreaseLockedAmountEvent.fromFields( typeArg, IncreaseLockedAmountEvent.bcs.parse(data) ) }
+
+ toJSONField() { return {
+
+ deTokenId: this.deTokenId,lockedBalance: this.lockedBalance.toString(),
+
+} }
+
+ toJSON() { return { $typeName: this.$typeName, $typeArgs: this.$typeArgs, ...this.toJSONField() } }
+
+ static fromJSONField<T extends PhantomReified<PhantomTypeArgument>>( typeArg: T, field: any ): IncreaseLockedAmountEvent<ToPhantomTypeArgument<T>> { return IncreaseLockedAmountEvent.reified( typeArg, ).new( { deTokenId: decodeFromJSONField(ID.reified(), field.deTokenId), lockedBalance: decodeFromJSONField("u64", field.lockedBalance) } ) }
+
+ static fromJSON<T extends PhantomReified<PhantomTypeArgument>>( typeArg: T, json: Record<string, any> ): IncreaseLockedAmountEvent<ToPhantomTypeArgument<T>> { if (json.$typeName !== IncreaseLockedAmountEvent.$typeName) { throw new Error("not a WithTwoGenerics json object") }; assertReifiedTypeArgsMatch( composeSuiType(IncreaseLockedAmountEvent.$typeName, extractType(typeArg)), json.$typeArgs, [typeArg], )
+
+ return IncreaseLockedAmountEvent.fromJSONField( typeArg, json, ) }
+
+ static fromSuiParsedData<T extends PhantomReified<PhantomTypeArgument>>( typeArg: T, content: SuiParsedData ): IncreaseLockedAmountEvent<ToPhantomTypeArgument<T>> { if (content.dataType !== "moveObject") { throw new Error("not an object"); } if (!isIncreaseLockedAmountEvent(content.type)) { throw new Error(`object at ${(content.fields as any).id} is not a IncreaseLockedAmountEvent object`); } return IncreaseLockedAmountEvent.fromFieldsWithTypes( typeArg, content ); }
+
+ static fromSuiObjectData<T extends PhantomReified<PhantomTypeArgument>>( typeArg: T, data: SuiObjectData ): IncreaseLockedAmountEvent<ToPhantomTypeArgument<T>> { if (data.bcs) { if (data.bcs.dataType !== "moveObject" || !isIncreaseLockedAmountEvent(data.bcs.type)) { throw new Error(`object at is not a IncreaseLockedAmountEvent object`); }
+
+ const gotTypeArgs = parseTypeName(data.bcs.type).typeArgs; if (gotTypeArgs.length !== 1) { throw new Error(`type argument mismatch: expected 1 type argument but got '${gotTypeArgs.length}'`); }; const gotTypeArg = compressSuiType(gotTypeArgs[0]); const expectedTypeArg = compressSuiType(extractType(typeArg)); if (gotTypeArg !== compressSuiType(extractType(typeArg))) { throw new Error(`type argument mismatch: expected '${expectedTypeArg}' but got '${gotTypeArg}'`); };
+
+ return IncreaseLockedAmountEvent.fromBcs( typeArg, fromB64(data.bcs.bcsBytes) ); } if (data.content) { return IncreaseLockedAmountEvent.fromSuiParsedData( typeArg, data.content ) } throw new Error( "Both `bcs` and `content` fields are missing from the data. Include `showBcs` or `showContent` in the request." ); }
+
+ static async fetch<T extends PhantomReified<PhantomTypeArgument>>( client: SuiClient, typeArg: T, id: string ): Promise<IncreaseLockedAmountEvent<ToPhantomTypeArgument<T>>> { const res = await client.getObject({ id, options: { showBcs: true, }, }); if (res.error) { throw new Error(`error fetching IncreaseLockedAmountEvent object at id ${id}: ${res.error.code}`); } if (res.data?.bcs?.dataType !== "moveObject" || !isIncreaseLockedAmountEvent(res.data.bcs.type)) { throw new Error(`object at id ${id} is not a IncreaseLockedAmountEvent object`); }
+
+ return IncreaseLockedAmountEvent.fromSuiObjectData( typeArg, res.data ); }
+
+ }
+
 /* ============================== RequestUnlockEvent =============================== */
 
 export function isRequestUnlockEvent(type: string): boolean { type = compressSuiType(type); return type.startsWith(`${PKG_V1}::events::RequestUnlockEvent` + '<'); }

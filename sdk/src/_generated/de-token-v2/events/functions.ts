@@ -23,6 +23,10 @@ export interface EmitLockEventArgs { deTokenId: string | TransactionArgument; lo
 
 export function emitLockEvent( tx: Transaction, typeArg: string, args: EmitLockEventArgs ) { return tx.moveCall({ target: `${PUBLISHED_AT}::events::emit_lock_event`, typeArguments: [typeArg], arguments: [ pure(tx, args.deTokenId, `${ID.$typeName}`), pure(tx, args.lockedBalance, `u64`) ], }) }
 
+export interface EmitIncreaseLockedAmountEventArgs { deTokenId: string | TransactionArgument; lockedBalance: bigint | TransactionArgument }
+
+export function emitIncreaseLockedAmountEvent( tx: Transaction, typeArg: string, args: EmitIncreaseLockedAmountEventArgs ) { return tx.moveCall({ target: `${PUBLISHED_AT}::events::emit_increase_locked_amount_event`, typeArguments: [typeArg], arguments: [ pure(tx, args.deTokenId, `${ID.$typeName}`), pure(tx, args.lockedBalance, `u64`) ], }) }
+
 export interface EmitRequestUnlockEventArgs { deTokenId: string | TransactionArgument; unlockedBalance: bigint | TransactionArgument; unlockedDuration: bigint | TransactionArgument; unlockedAt: bigint | TransactionArgument; timestamp: bigint | TransactionArgument }
 
 export function emitRequestUnlockEvent( tx: Transaction, typeArg: string, args: EmitRequestUnlockEventArgs ) { return tx.moveCall({ target: `${PUBLISHED_AT}::events::emit_request_unlock_event`, typeArguments: [typeArg], arguments: [ pure(tx, args.deTokenId, `${ID.$typeName}`), pure(tx, args.unlockedBalance, `u64`), pure(tx, args.unlockedDuration, `u64`), pure(tx, args.unlockedAt, `u64`), pure(tx, args.timestamp, `u64`) ], }) }

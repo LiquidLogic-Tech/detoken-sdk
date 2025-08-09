@@ -41,6 +41,8 @@ import * as zkloginVerifiedIssuer from "./zklogin-verified-issuer/structs";
 import {StructClassLoader} from "../../../_framework/loader";
 
 export function registerClasses(loader: StructClassLoader) { loader.register(accumulator.AccumulatorRoot);
+loader.register(accumulator.Key);
+loader.register(accumulator.U128);
 loader.register(authenticatorState.AuthenticatorState);
 loader.register(authenticatorState.AuthenticatorStateInner);
 loader.register(authenticatorState.JWK);

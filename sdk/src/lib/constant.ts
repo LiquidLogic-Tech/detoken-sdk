@@ -1,7 +1,7 @@
 import { normalizeSuiAddress } from "@mysten/sui/utils";
 
 export const UPGRADE_CAP_OBJECT_ID =
-  "0xf20e845fc1686a91a198c16467316ed518e3297646a75d3829a452427ef935e1";
+  "0x24b9e2def92a1ec02aa2bea74d8f402a25c71095103b983634193c54d4f4d55c";
 export const ADMIN_CAP_OBJECT_ID =
-  "0xe584ae63a40a89758983feb424f5977b316aa068867ecb45ff0ee3281ddc5e86";
+  "0x42d8fbe871bfb9120b76517708f8e6c8802839653d8e1dd6b4440c286c665272";
 export const DUMMY_ADDRESS = normalizeSuiAddress("0x00");

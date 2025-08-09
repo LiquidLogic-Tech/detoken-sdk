@@ -18,6 +18,10 @@ export function init( tx: Transaction, otw: TransactionObjectInput ) { return tx
 
 export function new_( tx: Transaction, typeArg: string, lockedBalance: TransactionObjectInput ) { return tx.moveCall({ target: `${PUBLISHED_AT}::de_token::new`, typeArguments: [typeArg], arguments: [ obj(tx, lockedBalance) ], }) }
 
+export interface IncreaseLockedAmountArgs { self: TransactionObjectInput; lockedBalance: TransactionObjectInput }
+
+export function increaseLockedAmount( tx: Transaction, typeArg: string, args: IncreaseLockedAmountArgs ) { return tx.moveCall({ target: `${PUBLISHED_AT}::de_token::increase_locked_amount`, typeArguments: [typeArg], arguments: [ obj(tx, args.self), obj(tx, args.lockedBalance) ], }) }
+
 export interface RequestUnlockArgs { self: TransactionObjectInput; value: bigint | TransactionArgument; unlockedDuration: bigint | TransactionArgument; minDuration: bigint | TransactionArgument; maxDuration: bigint | TransactionArgument; basePercentage: number | TransactionArgument; clock: TransactionObjectInput }
 
 export function requestUnlock( tx: Transaction, typeArg: string, args: RequestUnlockArgs ) { return tx.moveCall({ target: `${PUBLISHED_AT}::de_token::request_unlock`, typeArguments: [typeArg], arguments: [ obj(tx, args.self), pure(tx, args.value, `u64`), pure(tx, args.unlockedDuration, `u64`), pure(tx, args.minDuration, `u64`), pure(tx, args.maxDuration, `u64`), pure(tx, args.basePercentage, `u8`), obj(tx, args.clock) ], }) }

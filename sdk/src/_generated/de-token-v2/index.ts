@@ -1,9 +1,10 @@
 export const PACKAGE_ID =
-  "0x2ff3ee6dd570f1d795d8eaac0d4c774e33d142b250e33f46b3063145c541a529";
+  "0xfe831defb8bb984e6af60bde8234201adbc555b2378f64b130d32cd9eba1ac21";
 export let PUBLISHED_AT =
-  "0x2ff3ee6dd570f1d795d8eaac0d4c774e33d142b250e33f46b3063145c541a529";
+  "0xfe831defb8bb984e6af60bde8234201adbc555b2378f64b130d32cd9eba1ac21";
 export const PKG_V1 =
-  "0x2ff3ee6dd570f1d795d8eaac0d4c774e33d142b250e33f46b3063145c541a529";
+  "0xfe831defb8bb984e6af60bde8234201adbc555b2378f64b130d32cd9eba1ac21";
+
 export function setPublishedAt(pkg: string) {
   PUBLISHED_AT = pkg;
 }

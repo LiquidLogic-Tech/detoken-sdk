@@ -15,6 +15,7 @@ loader.register(events.UpdateDuration);
 loader.register(events.UpdateMinReturnPercentageRate);
 loader.register(events.WithdrawPenaltyFee);
 loader.register(events.LockEvent);
+loader.register(events.IncreaseLockedAmountEvent);
 loader.register(events.RequestUnlockEvent);
 loader.register(events.CancelUnlocKEvent);
 loader.register(events.ClaimEvent);
